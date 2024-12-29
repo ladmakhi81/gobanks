@@ -11,11 +11,27 @@ import (
 	"github.com/ladmakhi81/gobanks/repositories"
 	"github.com/ladmakhi81/gobanks/routers"
 	"github.com/ladmakhi81/gobanks/utils"
+	httpSwagger "github.com/swaggo/http-swagger"
+
+	_ "github.com/ladmakhi81/gobanks/docs"
 )
 
+// @title Go Bank Application
+// @version 1.0
+// @description This is sample of project implemented in go
+// @license.name MIT
+// @license.url http://opensource.org/licenses/MIT
+// @host localhost:8080
+// @BasePath /api/v1
+// @SecurityDefinitions.apiKey Bearer
+// @in header
+// @name Authorization
 func main() {
 	router := mux.NewRouter()
 	const port = ":8080"
+
+	// setup swagger
+	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
 
 	db := database.NewDatabaseServer()
 	db.Setup()

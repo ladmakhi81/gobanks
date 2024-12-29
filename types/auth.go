@@ -12,6 +12,11 @@ type LoginUserReqBody struct {
 	Number    int    `json:"number"`
 }
 
+type AuthUserResponse struct {
+	AccessToken string `json:"accessToken"`
+	AccountID   int    `json:"accountId"`
+}
+
 type AuthUser struct {
 	ID        int
 	Number    int

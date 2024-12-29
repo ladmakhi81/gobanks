@@ -16,6 +16,12 @@ type AccountHandler struct {
 	Repo contracts.AccountRepository
 }
 
+// deleteAccountHandler godoc
+// @Tags accounts
+// @Param id path int true "Account id"
+// @Success 200
+// @Router /accounts/{id} [delete]
+// @Security Bearer
 func (accHandler AccountHandler) DeleteAccountHandler(w http.ResponseWriter, r *http.Request) error {
 	params := mux.Vars(r)
 	id, parseErr := strconv.Atoi(params["id"])
@@ -26,10 +32,15 @@ func (accHandler AccountHandler) DeleteAccountHandler(w http.ResponseWriter, r *
 	if err != nil {
 		return err
 	}
-	utils.JsonRes(w, http.StatusOK, map[string]string{"message": "delete successfully ..."})
 	return nil
 }
 
+// getAccountByIdHandler godoc
+// @Tags accounts
+// @Success 200 {object} entities.Account
+// @Param id path int true "Account id"
+// @Router /accounts/{id} [get]
+// @Security Bearer
 func (accHandler AccountHandler) GetAccountByIdHandler(w http.ResponseWriter, r *http.Request) error {
 	params := mux.Vars(r)
 	id, parseErr := strconv.Atoi(params["id"])
@@ -44,6 +55,11 @@ func (accHandler AccountHandler) GetAccountByIdHandler(w http.ResponseWriter, r 
 	return nil
 }
 
+// getAccountsHandler godoc
+// @Tags accounts
+// @Success 200 {array} entities.Account
+// @Router /accounts [get]
+// @Security Bearer
 func (accHandler AccountHandler) GetAccountsHandler(w http.ResponseWriter, r *http.Request) error {
 	accounts, err := accHandler.Repo.GetAccounts()
 	if err != nil {
@@ -53,6 +69,12 @@ func (accHandler AccountHandler) GetAccountsHandler(w http.ResponseWriter, r *ht
 	return nil
 }
 
+// transferMoneyHandler godoc
+// @Tags accounts
+// @Success 200
+// @Param request body types.TransferMoneyReqBody true " "
+// @Router /accounts/transfer [post]
+// @Security Bearer
 func (accHandler AccountHandler) TransferMoneyHandler(w http.ResponseWriter, r *http.Request) error {
 	reqBody := new(types.TransferMoneyReqBody)
 	if err := json.NewDecoder(r.Body).Decode(reqBody); err != nil {
