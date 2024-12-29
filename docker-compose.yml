@@ -1,0 +1,11 @@
+version: '3.6'
+services:
+  db:
+    container_name: db
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=gobanks_db
+      - POSTGRES_NAME=postgres
+      - POSTGRES_PASSWORD=postgres
