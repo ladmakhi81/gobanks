@@ -28,6 +28,7 @@ import (
 // @name Authorization
 func main() {
 	router := mux.NewRouter()
+	apiRouter := router.PathPrefix("/api/v1").Subrouter()
 	const port = ":8080"
 
 	// setup swagger
@@ -63,12 +64,12 @@ func main() {
 
 	// routers
 	accountRouter := routers.AccountRoute{
-		Router:     router,
+		Router:     apiRouter,
 		Handlers:   accountHandlers,
 		Middleware: middleware,
 	}
 	authRouter := routers.AuthRoute{
-		Router:     router,
+		Router:     apiRouter,
 		Handlers:   authHandlers,
 		Middleware: middleware,
 	}

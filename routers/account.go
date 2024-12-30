@@ -14,33 +14,35 @@ type AccountRoute struct {
 }
 
 func (accRoute AccountRoute) Setup() {
+	accountApiRouter := accRoute.Router.PathPrefix("/accounts").Subrouter()
+
 	// DELETE ACCOUNT BY ID
-	accRoute.Router.HandleFunc(
-		"/api/v1/accounts/{id}",
+	accountApiRouter.HandleFunc(
+		"/{id}",
 		accRoute.Middleware.CheckAuth(
 			utils.ApiHandler(accRoute.Handlers.DeleteAccountHandler),
 		),
 	).Methods("DELETE")
 
 	// GET ACCOUNTS
-	accRoute.Router.HandleFunc(
-		"/api/v1/accounts",
+	accountApiRouter.HandleFunc(
+		"",
 		accRoute.Middleware.CheckAuth(
 			utils.ApiHandler(accRoute.Handlers.GetAccountsHandler),
 		),
 	).Methods("GET")
 
 	// GET ACCOUNT BY ID
-	accRoute.Router.HandleFunc(
-		"/api/v1/accounts/{id}",
+	accountApiRouter.HandleFunc(
+		"/{id}",
 		accRoute.Middleware.CheckAuth(
 			utils.ApiHandler(accRoute.Handlers.GetAccountByIdHandler),
 		),
 	).Methods("GET")
 
 	// TRANSFER MONEY
-	accRoute.Router.HandleFunc(
-		"/api/v1/accounts/transfer",
+	accountApiRouter.HandleFunc(
+		"/transfer",
 		accRoute.Middleware.CheckAuth(
 			utils.ApiHandler(accRoute.Handlers.TransferMoneyHandler),
 		),

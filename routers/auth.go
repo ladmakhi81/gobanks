@@ -16,19 +16,19 @@ type AuthRoute struct {
 func (authRoute AuthRoute) Setup() {
 	// sign-in account
 	authRoute.Router.HandleFunc(
-		"/api/v1/auth/sign-in",
+		"/auth/sign-in",
 		utils.ApiHandler(authRoute.Handlers.Login),
 	)
 
 	// sign-up account
 	authRoute.Router.HandleFunc(
-		"/api/v1/auth/sign-up",
+		"/auth/sign-up",
 		utils.ApiHandler(authRoute.Handlers.Signup),
 	)
 
 	// sign-out account
 	authRoute.Router.HandleFunc(
-		"/api/v1/auth/sign-out",
+		"/auth/sign-out",
 		authRoute.Middleware.CheckAuth(
 			utils.ApiHandler(authRoute.Handlers.Logout),
 		),
@@ -36,7 +36,7 @@ func (authRoute AuthRoute) Setup() {
 
 	// get profile account
 	authRoute.Router.HandleFunc(
-		"/api/v1/auth/profile",
+		"/auth/profile",
 		authRoute.Middleware.CheckAuth(
 			utils.ApiHandler(authRoute.Handlers.ProfileAccount),
 		),
